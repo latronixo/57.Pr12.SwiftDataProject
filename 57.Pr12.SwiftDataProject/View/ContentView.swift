@@ -11,11 +11,8 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @Query(filter: #Predicate<User> { user in
-        if user.name.localizedStandardContains("R") {
-            return true
-        } else {
-            return false
-        }
+        user.name.localizedStandardContains("R") &&
+        user.city == "London"
     }, sort: \User.name) var users: [User]
     @State private var path = [User]()
     
