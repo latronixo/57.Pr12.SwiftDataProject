@@ -42,18 +42,20 @@ struct ContentView: View {
                         showingUpcomingOnly.toggle()
                     }
                     
-                    Picker("Sort", selection: $sortOrder) {
-                        Text("Sort by Name")
-                            .tag([
-                                SortDescriptor(\User.name),
-                                SortDescriptor(\User.joinDate)
-                            ])
-                        
-                        Text("Sort by JoinDate")
-                            .tag([
-                                SortDescriptor(\User.joinDate),
-                                SortDescriptor(\User.name)
-                            ])
+                    Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: $sortOrder) {
+                            Text("Sort by Name")
+                                .tag([
+                                    SortDescriptor(\User.name),
+                                    SortDescriptor(\User.joinDate)
+                                ])
+                            
+                            Text("Sort by JoinDate")
+                                .tag([
+                                    SortDescriptor(\User.joinDate),
+                                    SortDescriptor(\User.name)
+                                ])
+                        }
                     }
                 }
         }
