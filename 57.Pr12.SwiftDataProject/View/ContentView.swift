@@ -12,10 +12,14 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var showingUpcomingOnly = false  //флаг. По умолчанию покажем все записи, если он будет true - покажем только тех, которые удовлетворяют фильтру
     
+    @State private var sortOrder = [
+        SortDescriptor(\User.name),
+        SortDescriptor(\User.joinDate)
+    ]
     
     var body: some View {
         NavigationStack {
-            UsersView(minimumJoinDate: showingUpcomingOnly ? .now : .distantPast)   //.distantPast - самая старая из возможных дат
+            UsersView(minimumJoinDate: showingUpcomingOnly ? .now : .distantPast, sortOrder: sortOrder)  //.distantPast - самая старая из возможных дат
                 .navigationTitle("Users")
                 .toolbar {
                     Button("Add Samples", systemImage: "plus") {
@@ -36,6 +40,20 @@ struct ContentView: View {
                     
                     Button(showingUpcomingOnly ? "Show Everyone" : "Show Upcoming") {
                         showingUpcomingOnly.toggle()
+                    }
+                    
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Sort by Name")
+                            .tag([
+                                SortDescriptor(\User.name),
+                                SortDescriptor(\User.joinDate)
+                            ])
+                        
+                        Text("Sort by JoinDate")
+                            .tag([
+                                SortDescriptor(\User.joinDate),
+                                SortDescriptor(\User.name)
+                            ])
                     }
                 }
         }
